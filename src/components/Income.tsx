@@ -3,6 +3,8 @@ import React from 'react'
 import { useInput } from '../hooks'
 import Input from './Input'
 import { Transaction } from '../types'
+import TransactionComponent from './TransactionComponent'
+import { createTransaction } from '../utils'
 
 interface IncomeProps {
     transactions: Transaction[]
@@ -17,11 +19,11 @@ const Income = ({ transactions, setTransactions }: IncomeProps) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('in the handleSubmit')
-        const newTransaction: Transaction = {
-            source: sourceInput.value,
-            amount: parseInt(amountInput.value),
-            date: dateInput.value
-        }
+        const newTransaction: Transaction = createTransaction(
+            sourceInput.value,
+            amountInput.value,
+            dateInput.value,
+            1)
         setTransactions(transactions.concat(newTransaction))
     }
 
@@ -58,7 +60,7 @@ const Income = ({ transactions, setTransactions }: IncomeProps) => {
             <ul>
             {transactions.map((transaction, index) => {
                 return transaction.amount >= 0
-                ?<li key={index}>{transaction.source}: {transaction.amount}e on {transaction.date}</li>
+                ? <TransactionComponent key={index} transaction={transaction}/>
                 : null
             })}
             </ul>

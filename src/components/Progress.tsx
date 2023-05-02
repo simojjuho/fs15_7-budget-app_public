@@ -19,6 +19,8 @@ const Progress = ({savings}: ProgressProps) => {
     if(targetNumber > 0) setTarget(targetNumber)
   }
 
+  const getPercentage = () => target === 0 ? 0 : Math.round(savings / target * 100)
+
   return (
     <section id="progress">
       <form onSubmit={handleSubmit}>
@@ -30,8 +32,12 @@ const Progress = ({savings}: ProgressProps) => {
         />
         <button type="submit">Reset</button>
       </form>
-      Current savings: {savings}
-      <progress id='savingsProgress' value={`${savings}`} max={`${target}`}></progress>
+      <p>Current savings: {savings}</p>
+      <p>Target: {target}</p>
+      <p>Progress: {getPercentage()}%
+        <progress id='savingsProgress' value={`${savings}`} max={`${target}`}></progress>
+      </p>
+      
     </section>
  )
 }

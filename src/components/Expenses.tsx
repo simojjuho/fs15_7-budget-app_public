@@ -3,6 +3,8 @@ import React from 'react'
 import { useInput } from '../hooks'
 import Input from './Input'
 import { Transaction } from '../types'
+import { createTransaction } from '../utils'
+import TransactionComponent from './TransactionComponent'
 
 
 interface ExpenseProps {
@@ -19,11 +21,11 @@ const Expenses = ({ transactions, setTransactions, balance }: ExpenseProps) => {
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('in the handleSubmit')
-        const newTransaction: Transaction = {
-            source: sourceInput.value,
-            amount: parseInt(amountInput.value)*-1,
-            date: dateInput.value
-        }
+        const newTransaction: Transaction = createTransaction(
+            sourceInput.value,
+            amountInput.value,
+            dateInput.value,
+            -1)
         if(balance + newTransaction.amount >= 0) setTransactions(transactions.concat(newTransaction))
 
     }
@@ -56,10 +58,11 @@ const Expenses = ({ transactions, setTransactions, balance }: ExpenseProps) => {
             >Add expense</button>
         </form>
         <article id='previousExpenses'>
+            
             <ul>
             {transactions.map((transaction, index) => {
                 return transaction.amount <= 0
-                ?<li key={index}>{transaction.source}: {transaction.amount}e on {transaction.date}</li>
+                ? <TransactionComponent key={index} transaction={transaction} />
                 : null
             })}
             </ul>
