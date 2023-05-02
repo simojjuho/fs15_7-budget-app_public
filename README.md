@@ -1,4 +1,6 @@
 # Getting Started with React Components & React Hooks
+by: Juho Simojoki
+App made as an assignment for Integrify Finland Full-stack academy (Microsoft stack)
 
 This assignment requires also TypeScript when passing props to React Components
 
